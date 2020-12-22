@@ -59,11 +59,23 @@ def split_dataset(x, y):
 # feature scaling
 def scale_features(x_train, x_test):
     scaler = StandardScaler()
-    scaler.fit_transform(x_train)
-    scaler.fit_transform(x_test)
+    x_train = scaler.fit_transform(x_train)
+    x_test = scaler.fit_transform(x_test)
+    return x_train, x_test
 
-#
-# data = import_data()
-# data = redefine_classes(data)
-# print(data.head(5))
-# data = encode_labels(data)
+
+def preprocess():
+    data = import_data()
+
+    # no missing values
+    check_missing_vals(data)
+
+    data = redefine_classes(data)
+    data = encode_labels(data)
+    print("Redefined classes: \n" + str(data.head(2)))
+
+    x, y = extract_data(data)
+    x_train, x_test, y_train, y_test = split_dataset(x, y)
+    x_train, x_test = scale_features(x_train, x_test)
+
+    return x_train, x_test, y_train, y_test
