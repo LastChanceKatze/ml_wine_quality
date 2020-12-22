@@ -16,10 +16,10 @@ def import_data():
 # independent variables
 def extract_data(data):
     x = data.iloc[:, :-1].values
-    print("Data: \n" + str(x))
+    # print("Data: \n" + str(x))
     # dependent variable
     y = data.iloc[:, -1].values
-    print("Output: \n" + str(y))
+    # print("Output: \n" + str(y))
     return x, y
 
 
@@ -36,7 +36,7 @@ def check_missing_vals(data):
 # 4-7: good
 # 8-10: excellent
 def redefine_classes(data):
-    bins = (0, 3, 7, 10)
+    bins = (0, 4, 6, 10)
     labels = ['bad', 'good', 'excellent']
     data['quality'] = pd.cut(data['quality'], bins=bins, labels=labels)
     return data
@@ -46,7 +46,6 @@ def redefine_classes(data):
 def encode_labels(data):
     encode_quality = LabelEncoder()
     data['quality'] = encode_quality.fit_transform(data['quality'])
-    print(data['quality'].value_counts())
     return data
 
 
@@ -64,15 +63,12 @@ def scale_features(x_train, x_test):
     return x_train, x_test
 
 
-def preprocess():
-    data = import_data()
-
+def preprocess(data):
     # no missing values
     check_missing_vals(data)
 
     data = redefine_classes(data)
     data = encode_labels(data)
-    print("Redefined classes: \n" + str(data.head(2)))
 
     x, y = extract_data(data)
     x_train, x_test, y_train, y_test = split_dataset(x, y)
