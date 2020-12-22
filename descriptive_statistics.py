@@ -17,11 +17,11 @@ def plot_density_graph(data):
 
 
 def plot_boxplot(data):
-    data.drop('quality', axis=1).plot(kind='box', subplots=True, layout=(2, 6),
+    data.drop('quality', axis=1).plot(kind='box', figsize=(10, 10), subplots=True, layout=(2, 6),
                                       sharex=False, sharey=False,
                                       title='Box Plot for each input variable')
     plt.subplots_adjust(wspace=0.5)
-    plt.savefig('box_plot.jpg')
+    plt.savefig('features_box_plot.jpg')
     plt.show()
 
 
@@ -44,15 +44,24 @@ def plot_barplots(data):
 
 def plot_histogram(data, data_column):
     plt.figure(figsize=(14, 8))
-    data[data_column].plot(kind='hist')
+    data[data_column].plot(kind='hist', figsize=(8, 8))
     # sns.histplot(data_column, kde=True)
+    plt.savefig("./graphs/" + data_column + "_histogram.jpg")
+    plt.show()
+
+
+def plot_count(data, data_column):
+    plt.figure(figsize=(14, 8))
+    sns.countplot(x=data_column, data=data)
+    plt.savefig("./graphs/" + data_column + "_countplot.jpg")
     plt.show()
 
 
 # TODO: uses seaborn
 def correlation_matrix(data):
     corr = data.corr()
-    sns.heatmap(corr, xticklabels=corr.columns, yticklabels=corr.columns, annot=True)
+    fig, ax = plt.subplots(figsize=(10, 10))
+    sns.heatmap(corr, xticklabels=corr.columns, yticklabels=corr.columns, annot=True, ax=ax)
     plt.savefig("correlation_matrix.png")
     plt.show()
 
@@ -93,8 +102,14 @@ def exploratory_analysis():
     # plot_barplots(data)
 
     # correlation matrix
-    corr = correlation_matrix(data)
-    print("Sorted correlation values: \n" + str(corr))
+    # corr = correlation_matrix(data)
+    # print("Sorted correlation values: \n" + str(corr))
+
+    """
+    quality count plot with redefined classes
+    """
+    data = pp.redefine_classes(data)
+    plot_count(data, 'quality')
 
 
 exploratory_analysis()
