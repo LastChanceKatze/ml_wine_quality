@@ -1,1 +1,1 @@
-# ml_wine_quality
+# ml-wine-quality
