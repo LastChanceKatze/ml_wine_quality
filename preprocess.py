@@ -1,13 +1,15 @@
 import pandas as pd
+import numpy as np
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.model_selection import train_test_split
 desired_width = 500
 pd.set_option('display.width', desired_width)
 pd.set_option('display.max_columns', 20)
 
+
 # import data
 def import_data():
-    data = pd.read_csv("../dataset/winequality-white.csv", delimiter=';')
+    data = pd.read_csv("./dataset/winequality-white.csv", delimiter=';')
     print(data.head(5))
     return data
 
@@ -63,15 +65,59 @@ def scale_features(x_train, x_test):
     return x_train, x_test
 
 
-def preprocess(data):
+def replace_outliers_bound(feature):
+    q1, q3 = np.percentile(feature, [25, 75])
+    iqr = q3 - q1
+    lower_bound = q1 - (iqr * 1.5)
+    upper_bound = q3 + (iqr * 1.5)
+    new_feature = feature
+    new_feature = np.where(new_feature > upper_bound, upper_bound, new_feature)
+    new_feature = np.where(new_feature < lower_bound, lower_bound, new_feature)
+    return new_feature
+
+
+def replace_outliers_log(feature):
+    return np.log(feature)
+
+
+def handle_outliers(x):
+    all_indices = list(range(0, x.shape[1]))
+
+    """
+        fixed acidity, sugar,
+        free sul. dioxide, total sul. dioxide
+    """
+    log_indices = [0, 3, 5, 6]
+    for ind in log_indices:
+        new_feature = replace_outliers_log(x[:, ind])
+        x[:, ind] = new_feature
+
+    bound_indices = np.setdiff1d(all_indices, log_indices)
+    for ind in bound_indices:
+        new_feature = replace_outliers_bound(x[:, ind])
+        x[:, ind] = new_feature
+
+    return x
+
+
+def preprocess(data, hnd_outliers=False):
     # no missing values
-    check_missing_vals(data)
+    # check_missing_vals(data)
 
     data = redefine_classes(data)
     data = encode_labels(data)
 
     x, y = extract_data(data)
     x_train, x_test, y_train, y_test = split_dataset(x, y)
+
+    # handle outliers
+    if hnd_outliers:
+        x_train = handle_outliers(x_train)
+        x_test = handle_outliers(x_test)
+
     x_train, x_test = scale_features(x_train, x_test)
 
     return x_train, x_test, y_train, y_test
+
+
+
