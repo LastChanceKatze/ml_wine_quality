@@ -26,7 +26,7 @@ def confusion_matrix(y_test, y_pred, data, plot=False, classifier_name=""):
         plt.title("Confusion matrix: " + classifier_name)
         plt.xlabel("False")
         plt.ylabel("True")
-        plt.savefig("./graphs/confusion_matrix_" + classifier_name + ".jpg")
+        plt.savefig("../graphs/confusion_matrix_" + classifier_name + ".jpg")
         plt.show()
 
 
