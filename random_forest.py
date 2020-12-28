@@ -8,7 +8,7 @@ import evaluate as evl
 
 # get data
 data = pp.import_data()
-x_train, x_test, y_train, y_test = pp.preprocess(data)
+x_train, x_test, y_train, y_test = pp.preprocess(data, hnd_outliers=False)
 
 # random forest classifier
 rfc = RandomForestClassifier(n_estimators=100)
