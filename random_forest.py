@@ -2,7 +2,7 @@ from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
 import matplotlib.pyplot as plt
 import preprocess as pp
-import evaluate as eval
+import evaluate as evl
 
 # TODO: add GridSearchCV to improve performance
 
@@ -17,13 +17,13 @@ y_pred = rfc.predict(x_test)
 #
 
 # cross validation score
-eval.cross_val_eval(rfc, x_train, y_train, 5)
+evl.cross_val_eval(rfc, x_train, y_train, 5)
 
 # accuracy, recall, precision, f1
-eval.evaluate_model(y_test, y_pred)
+evl.evaluate_model(y_test, y_pred)
 
 # confusion matrix
-eval.confusion_matrix(y_test, y_pred, data, False)
+evl.confusion_matrix(y_test, y_pred, data, False)
 
 # important features
 feature_importance = model.feature_importances_
