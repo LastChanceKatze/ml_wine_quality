@@ -8,8 +8,8 @@ from preprocess import *
 from sklearn import svm
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import AdaBoostRegressor
-#from descriptive_statistics import *
-from sklearn.svm import SVC
+from preprocess import *
+from evaluate import *
 
 data=import_data()
 
@@ -23,4 +23,11 @@ clf.fit(data_train, target_train)
 
 pred=clf.predict(data_test)
 
-print ("ADa boost accuracy score : ", accuracy_score(target_test, pred))
+# cross validation score
+cross_val_eval(clf, data_train, target_train, 5)
+
+# accuracy, recall, precision, f1
+evaluate_model(target_test, pred)
+
+# confusion matrix
+confusion_matrix(target_test, pred, data, False, "adaboost")
