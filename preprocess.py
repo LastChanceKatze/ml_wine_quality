@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.model_selection import train_test_split
+import feature_selection as fs
 desired_width = 500
 pd.set_option('display.width', desired_width)
 pd.set_option('display.max_columns', 20)
@@ -100,7 +101,7 @@ def handle_outliers(x):
     return x
 
 
-def preprocess(data, hnd_outliers=False):
+def preprocess(data, hnd_outliers=False, var_threshold=False):
     # no missing values
     # check_missing_vals(data)
 
@@ -114,6 +115,10 @@ def preprocess(data, hnd_outliers=False):
     if hnd_outliers:
         x_train = handle_outliers(x_train)
         x_test = handle_outliers(x_test)
+
+    # remove features with variance below a threshold
+    if var_threshold:
+        x_train, x_test = fs.variance_threshold(x_train, x_test)
 
     x_train, x_test = scale_features(x_train, x_test)
 
