@@ -22,7 +22,7 @@ def recursive_f_elimination(estimator, x_train, y_train, x_test):
     return x_train, x_test
 
 
-def plot_pcs(variance):
+def plot_pca(variance):
     plt.plot(variance)
     plt.xlabel('Number of components')
     plt.ylabel("Variance")
