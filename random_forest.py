@@ -20,7 +20,7 @@ rfc = RandomForestClassifier(n_estimators=100)
 #
 
 # recursive elimination feature selection
-x_train, x_test = fs.recursive_f_elimination(estimator=rfc, x_train=x_train, y_train=y_train, x_test=x_test)
+# x_train, x_test = fs.recursive_f_elimination(estimator=rfc, x_train=x_train, y_train=y_train, x_test=x_test)
 #
 
 # fit and predict
