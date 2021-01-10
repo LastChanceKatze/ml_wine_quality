@@ -15,7 +15,8 @@ def grid_search(classifier):
         "class_weight": ["balanced", None, "balanced_subsample"]
     }
 
-    rfc_gs = GridSearchCV(estimator=classifier, param_grid=param_dict, scoring="accuracy", cv=5, verbose=True, n_jobs=-1)
+    rfc_gs = GridSearchCV(estimator=classifier, param_grid=param_dict, scoring="accuracy",
+                          cv=5, verbose=True, n_jobs=-1)
     rfc_gs.fit(x_train, y_train)
 
     print("Best estimator:\n", rfc_gs.best_params_)
@@ -52,6 +53,7 @@ x_train, x_test, y_train, y_test = pp.preprocess(data, hnd_outliers=False, var_t
 # random forest classifier
 rfc = RandomForestClassifier(random_state=20, n_estimators=150, criterion="entropy",
                              min_samples_leaf=1)
+rfc = grid_search(RandomForestClassifier())
 
 # recursive elimination feature selection
 # x_train, x_test = fs.recursive_f_elimination(estimator=rfc, x_train=x_train, y_train=y_train, x_test=x_test)
