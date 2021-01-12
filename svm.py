@@ -28,6 +28,13 @@ def grid_search(is_grid_search=False):
     else:
         clf=svm.SVC(C=1000, gamma=0.001, kernel='rbf')
 
+    # pca feature selection
+    #data_train, data_test = fs.pca_selection(data_train, data_test, 9)
+    #
+
+    # recursive elimination feature selection
+    data_train, data_test = fs.recursive_f_elimination(estimator=clf, x_train=data_train, y_train=target_train, x_test=data_test) 
+
 
     clf.fit(data_train, target_train)
 

@@ -27,6 +27,13 @@ def grid_search(is_grid_search=False):
     else:
         clf=KNeighborsClassifier( metric = 'manhattan', n_neighbors = 19, weights ='distance')
 
+    # pca feature selection
+    data_train, data_test = fs.pca_selection(data_train, data_test, 9)
+    #
+
+    # recursive elimination feature selection
+    #data_train, data_test = fs.recursive_f_elimination(estimator=clf, x_train=data_train, y_train=target_train, x_test=data_test)    
+
 
     #Train the algorithm
     clf.fit(data_train, target_train)
@@ -47,4 +54,4 @@ def grid_search(is_grid_search=False):
     # confusion matrix
     confusion_matrix(target_test, pred, data, False, "KNN")
 
-grid_search(True)
+grid_search(False)
