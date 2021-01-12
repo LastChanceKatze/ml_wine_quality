@@ -3,6 +3,8 @@ import numpy as np
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.model_selection import train_test_split
 import feature_selection as fs
+from imblearn.over_sampling import SMOTE
+
 desired_width = 500
 pd.set_option('display.width', desired_width)
 pd.set_option('display.max_columns', 20)
@@ -99,6 +101,11 @@ def handle_outliers(x):
         x[:, ind] = new_feature
 
     return x
+
+def smote_data(data_train, target_train):
+    smote=SMOTE()
+    data_train, target_train=smote.fit_resample(data_train, target_train)
+    return data_train, target_train
 
 
 def preprocess(data, hnd_outliers=False, var_threshold=False):
