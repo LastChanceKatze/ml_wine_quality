@@ -1,14 +1,9 @@
 #import necessary modules
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import accuracy_score
-import matplotlib.pyplot as plt
-import seaborn as sns
 from sklearn import svm
 from sklearn.model_selection import GridSearchCV
-import pandas as pd
-from preprocess import *
-from evaluate import *
-from feature_selection import *
+from scipts.preprocess import *
+from scipts.evaluate import *
+
 
 #best params {'C': 1000, 'gamma': 0.001, 'kernel': 'rbf'}
 def grid_search(is_grid_search=False):

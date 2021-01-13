@@ -1,7 +1,5 @@
 from sklearn.linear_model import LogisticRegression
-import preprocess as pp
-import evaluate as evl
-
+from scipts import evaluate as evl, preprocess as pp
 
 # get data
 data = pp.import_data()

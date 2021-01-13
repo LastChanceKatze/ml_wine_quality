@@ -12,7 +12,7 @@ pd.set_option('display.max_columns', 20)
 
 # import data
 def import_data():
-    data = pd.read_csv("./dataset/winequality-white.csv", delimiter=';')
+    data = pd.read_csv("../dataset/winequality-white.csv", delimiter=';')
     print(data.head(5))
     return data
 
